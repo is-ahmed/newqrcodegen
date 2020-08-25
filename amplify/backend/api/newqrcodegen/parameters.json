@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "newqrcodegen",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authnewqrcodegenbee85dbb",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

@@ -1,0 +1,44 @@
+{
+    "auth": {
+        "newqrcodegenbee85dbb": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": []
+        }
+    },
+    "api": {
+        "newqrcodegen": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "output": {
+                "authConfig": {
+                    "defaultAuthentication": {
+                        "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+                        "userPoolConfig": {
+                            "userPoolId": "authnewqrcodegenbee85dbb"
+                        }
+                    },
+                    "additionalAuthenticationProviders": [
+                        {
+                            "authenticationType": "AWS_IAM"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "predictions": {
+        "translateTextb922c648": {
+            "providerPlugin": "awscloudformation",
+            "service": "Translate",
+            "convertType": "translateText"
+        }
+    },
+    "hosting": {
+        "amplifyhosting": {
+            "service": "amplifyhosting",
+            "providerPlugin": "awscloudformation",
+            "type": "manual"
+        }
+    }
+}

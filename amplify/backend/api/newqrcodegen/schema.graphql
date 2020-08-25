@@ -1,0 +1,38 @@
+type Checkin @model 
+  @auth(rules: [
+    { allow: owner }
+    { allow: public, provider: iam, operations: [create] }
+  ])
+ {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  propertyID: String
+  propertyAddress: String
+  notes: String
+  createdAt: String
+  star: Boolean
+  owner: String
+}
+
+type Property 
+  @model 
+  @aws_iam
+  @aws_cognito_user_pools
+  @auth(rules: [
+    { allow: owner, operations: [create, read, update, delete] }
+    { allow: public, provider: iam, operations: [read] }
+  ])
+ {
+  id: ID!
+  address: String
+  scanText: String
+  picture0: String
+  picture1: String
+  sign: String
+  createdAt: String
+  owner: String
+  questions: String
+}
