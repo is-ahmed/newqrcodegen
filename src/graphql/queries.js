@@ -15,6 +15,7 @@ export const getCheckin = /* GraphQL */ `
       createdAt
       star
       owner
+      answers
       updatedAt
     }
   }
@@ -38,6 +39,7 @@ export const listCheckins = /* GraphQL */ `
         createdAt
         star
         owner
+        answers
         updatedAt
       }
       nextToken
@@ -56,6 +58,8 @@ export const getProperty = /* GraphQL */ `
       createdAt
       owner
       questions
+      title
+      inputText
       updatedAt
     }
   }
@@ -77,6 +81,8 @@ export const listPropertys = /* GraphQL */ `
         createdAt
         owner
         questions
+        title
+        inputText
         updatedAt
       }
       nextToken

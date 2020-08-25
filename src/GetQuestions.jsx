@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Modal, Segment, Input, Form, Button, Dropdown, Label } from 'semantic-ui-react';
-import Amplify, {API, graphqlOperation} from 'aws-amplify'
+import Amplify from 'aws-amplify'
 import Predictions, {AmazonAIPredictionsProvider} from '@aws-amplify/predictions'
 import awsmobile from './aws-exports.js'
-import {createProperty} from './graphql/mutations.js'
 Amplify.addPluggable(new AmazonAIPredictionsProvider());
 Amplify.configure(awsmobile)
 
@@ -77,7 +76,7 @@ function GetPropertyInfo({popup, doneHandle, myQuestions, myQuestionLang}) {
     } else {
         translations[1] = JSON.parse(JSON.stringify(questionList))
     }
-    doneHandle((translations[0] == null) ? questionList : translations);
+    doneHandle(questionList);
   }
   
   function handleViewChange(evt){

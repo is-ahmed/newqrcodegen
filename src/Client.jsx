@@ -10,6 +10,7 @@ import { getProperty } from "./graphql/queries";
 import '@aws-amplify/ui/dist/style.css';
 
 import awsmobile from './aws-exports';
+import { findByLabelText } from '@testing-library/react';
 
 Amplify.configure(awsmobile);
 
@@ -19,6 +20,7 @@ function Client(props) {
   const [finish, setFinish] = useState(false);
   const [property, setProperty] = useState(null);
   const [index, setIndex] = useState(0);
+  const [inputCheckin, setInput] = useState({})
   const [answers, setAnswers] = useState([]);
   
   useEffect(() => {
@@ -38,7 +40,10 @@ function Client(props) {
   function nextQuestion(question, choice){
     setAnswers([...answers, {"question": question.question, "answer": choice}])
     setIndex(index + 1);
-    console.log(answers);
+    if (index + 1 >= JSON.parse(property.questions).length){
+      console.log('a')
+      inputToCheckin();
+    }
   }
   
 
@@ -50,7 +55,6 @@ function Client(props) {
   if (finish && index === JSON.parse(property.questions).length) {
 
     // getBuyers();
-
 
     // alert(property.picture1);
 
@@ -80,7 +84,7 @@ function Client(props) {
       return (
         <Container>
             <Header style={{'height': '75px'}} as='h1' size='massive' textAlign='center'>
-              <Header.Content>Welcome To</Header.Content>
+              <Header.Content>{property.title}</Header.Content>
             </Header>
             <Image
                 centered
@@ -91,9 +95,16 @@ function Client(props) {
         </Container>
       )
   }
+  async function inputToCheckin(){
+    inputCheckin.variables.answers = JSON.stringify(answers);
+    try {
+      await API.graphql(inputCheckin)
+    } catch (err) {
+      alert("failed to add " + JSON.stringify(err))
+    }
+  }
 
-
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
     
     const data = new FormData(event.target);
@@ -102,14 +113,30 @@ function Client(props) {
       alert("Please enter all fields");
       return;
     }
-
+    setInput({
+      query: createCheckin,
+      operationName: "createCheckin",
+      variables: {input: {
+        email: data.get('email'),
+        firstName: data.get('first'),
+        lastName: data.get('last'),
+        phone: data.get('tel'),
+        owner: props.agent,
+        propertyID: props.id,
+        propertyAddress: property.address,
+        star: false,
+        notes: null,
+        answers: null
+      }},
+      authMode: "AWS_IAM",        
+    })
     /*
     for (var [key, value] of data.entries()) {
       alert('key: ' + key + ' value: ' + value);
   }
   */
 
-  
+  /*
     try {
       await API.graphql({
         query: createCheckin,
@@ -129,8 +156,7 @@ function Client(props) {
       })} catch (err) {
         alert("failed to add " + JSON.stringify(err));
       }
-  
-
+    */
     /*
     try {
       await API.graphql(graphqlOperation(createCheckin, { input: { 
@@ -153,9 +179,8 @@ function Client(props) {
   return (
   <Container>
     <Header as='h2' icon textAlign='center'>
-     
       <Header.Content>Welcome To {property.address}</Header.Content>
-      
+      <Button>Translate to Chinese (Simplified)</Button>
     </Header>
     <Image
       centered
@@ -191,9 +216,9 @@ function Question ({question, nextQuestion}){
 
   return (
     <Form style={{textAlign: 'center'}}>
-      <Form.Field>
+      <Form.Field style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
         <label>{question.question}</label>
-        {question.choices.map(choice => <Button onClick={() => nextQuestion(question, choice)}>{choice}</Button>)}
+        {question.choices.map(choice => <Button style={{marginTop: '1em'}} onClick={() => nextQuestion(question, choice)}>{choice}</Button>)}
       </Form.Field>
     </Form>
   )

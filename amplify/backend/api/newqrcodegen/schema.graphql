@@ -15,6 +15,7 @@ type Checkin @model
   createdAt: String
   star: Boolean
   owner: String
+  answers: String
 }
 
 type Property 
@@ -35,4 +36,6 @@ type Property
   createdAt: String
   owner: String
   questions: String
+  title: String
+  inputText: String
 }

@@ -15,6 +15,7 @@ export const onCreateCheckin = /* GraphQL */ `
       createdAt
       star
       owner
+      answers
       updatedAt
     }
   }
@@ -33,6 +34,7 @@ export const onUpdateCheckin = /* GraphQL */ `
       createdAt
       star
       owner
+      answers
       updatedAt
     }
   }
@@ -51,6 +53,7 @@ export const onDeleteCheckin = /* GraphQL */ `
       createdAt
       star
       owner
+      answers
       updatedAt
     }
   }
@@ -67,6 +70,8 @@ export const onCreateProperty = /* GraphQL */ `
       createdAt
       owner
       questions
+      title
+      inputText
       updatedAt
     }
   }
@@ -83,6 +88,8 @@ export const onUpdateProperty = /* GraphQL */ `
       createdAt
       owner
       questions
+      title
+      inputText
       updatedAt
     }
   }
@@ -99,6 +106,8 @@ export const onDeleteProperty = /* GraphQL */ `
       createdAt
       owner
       questions
+      title
+      inputText
       updatedAt
     }
   }
