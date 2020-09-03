@@ -76,7 +76,7 @@ function GetPropertyInfo({popup, doneHandle, myQuestions, myQuestionLang}) {
     } else {
         translations[1] = JSON.parse(JSON.stringify(questionList))
     }
-    doneHandle(questionList);
+    doneHandle(JSON.parse(JSON.stringify(translations)));
   }
   
   function handleViewChange(evt){

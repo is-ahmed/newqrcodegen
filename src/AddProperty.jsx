@@ -28,9 +28,7 @@ function AddProperty() {
         setPopup(false);
         alert(JSON.stringify(questionList))
         const inputQuestions = {
-            title: questionList[0].question,
-            inputText: JSON.stringify(questionList[1]),
-            questions: JSON.stringify(questionList.slice(2))
+            questions: JSON.stringify(questionList)
         }
         try {
             await API.graphql(graphqlOperation(createProperty, {input: inputQuestions}))
@@ -44,7 +42,7 @@ function AddProperty() {
     <Container>
         <CreateSign property={property} doneHandle={() => setPopup(true)} />
         <EditSign property={property} />
-        <GetQuestions popup={popup} doneHandle={doneHandle} myQuestions={[]} myQuestionLang={[[{"question":"Test Title","choices":[]},{"question":"Surname","choices":['Enter your surname']},  {"question":"Do you have any agent?","choices":['yes', 'no']}],null]}/>
+        <GetQuestions popup={popup} doneHandle={doneHandle} myQuestions={[]} myQuestionLang={[[{"question":"Test Title","choices":[]},{"question":"Thank You","choices":[]},{"question":"Translate","choices":[]},{"question":"Submit","choices":[]},{"question":"Surname","choices":['Enter your surname']}, {"question":"Given Name","choices":['Enter your first name']},{"question":"Email","choices":['Enter your email']},{"question":"Telephone","choices":['Enter your number']}, {"question":"Do you have any agent?","choices":['yes', 'no']}],null]}/>
     </Container>
     )
 }

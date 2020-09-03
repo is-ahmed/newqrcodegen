@@ -24,6 +24,7 @@ function Client(props) {
   const [property, setProperty] = useState(null);
   const [index, setIndex] = useState(0);
   const [inputCheckin, setInput] = useState({})
+  const [language, setLanguage] = useState('en')
 
   
   useEffect(() => {
@@ -46,14 +47,14 @@ function Client(props) {
   }
   
 
-  if (finish && index === JSON.parse(property.questions).length) {
+  if (finish && index === JSON.parse(property.questions)[0].slice(8).length) {
     return (
-      <ThankYou property={property}/>
+      <ThankYou property={property} language={language}/>
     )
 
-  } else if (finish && index !== JSON.parse(property.questions).length) {
+  } else if (finish && index !== JSON.parse(property.questions)[0].slice(8).length) {
       return (
-        <AgentQuestions property={property} callBackAgent={callBackAgent}/>
+        <AgentQuestions property={property} callBackAgent={callBackAgent} language={language} callBackTranslate={callBackTranslate}/>
       )
   }
   async function callBackAgent(inputAnswers, inputIndex){
@@ -71,8 +72,16 @@ function Client(props) {
       setInput(inputData);
   }
 
+  function callBackTranslate(){
+    if (language === 'en'){
+      setLanguage('zh')
+    } else {
+      setLanguage('en')
+    }
+  }
+
   return (
-    <ClientQuestions props={props} property={property} callBackClient={callBackClient}/>
+    <ClientQuestions props={props} property={property} callBackClient={callBackClient} language={language} callBackTranslate={callBackTranslate}/>
   )
 }
 
